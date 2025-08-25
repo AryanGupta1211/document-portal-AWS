@@ -1,0 +1,14 @@
+.venv/
+.env
+notebook
+document_portal.egg-info
+__pycache__/
+logs/
+*.pyc
+test.py
+faiss_index/
+archive
+archieve_requirements.txt
+archive_template.yml
+archive_aws.yml
+data/
