@@ -44,7 +44,7 @@ jobs:
           FAISS_BASE: "./test_data"
 
       - name: Upload test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: pre-commit-test-results
@@ -95,7 +95,7 @@ jobs:
           name: codecov-umbrella
 
       - name: Upload test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: post-commit-test-results
@@ -133,7 +133,7 @@ jobs:
           safety check --json --output safety-report.json || true
 
       - name: Upload security reports
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         if: always()
         with:
           name: security-reports
