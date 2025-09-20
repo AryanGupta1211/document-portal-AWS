@@ -7,7 +7,8 @@ from langchain_google_genai import GoogleGenerativeAIEmbeddings, ChatGoogleGener
 from langchain_groq import ChatGroq
 from logger import GLOBAL_LOGGER as log
 from exception.custom_exception import DocumentPortalException
-
+from langchain.globals import set_llm_cache
+from langchain_community.cache import InMemoryCache
 
 class ApiKeyManager:
     REQUIRED_KEYS = ["GROQ_API_KEY", "GOOGLE_API_KEY"]
@@ -56,6 +57,7 @@ class ModelLoader:
     """
 
     def __init__(self):
+        set_llm_cache(InMemoryCache()) 
         if os.getenv("ENV", "local").lower() != "production":
             load_dotenv()
             log.info("Running in LOCAL mode: .env loaded")

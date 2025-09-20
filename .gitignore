@@ -1,6 +1,6 @@
 .venv/
 .env
-notebook
+notebook/
 document_portal.egg-info
 __pycache__/
 logs/
@@ -13,3 +13,9 @@ archive_template.yml
 archive_aws.yml
 data/
 assignment.txt
+incline_policy.json
+auth.db
+.pytest_cache/
+backup.html
+working_.html
+.deepeval/

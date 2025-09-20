@@ -89,6 +89,31 @@
         font-size: 1.5rem;
       }
 
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .welcome-text {
+        font-weight: 500;
+      }
+
+      .logout-btn {
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        color: white;
+        padding: 0.5rem 1rem;
+        border-radius: var(--radius);
+        font-weight: 500;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .logout-btn:hover {
+        background: rgba(255, 255, 255, 0.25);
+      }
+
       .mode-switch {
         display: flex;
         background: rgba(255, 255, 255, 0.15);
@@ -412,6 +437,12 @@
           gap: 1rem;
         }
 
+        .user-info {
+          order: 3;
+          width: 100%;
+          justify-content: flex-end;
+        }
+
         .form-grid-2 {
           grid-template-columns: 1fr;
         }
@@ -449,6 +480,10 @@
             <button class="tab-btn" data-tab="compare">Document Compare</button>
             <button class="tab-btn" data-tab="chat">Doc Chat</button>
           </nav>
+          <div class="user-info">
+            <div class="welcome-text">Welcome, {{ user.username }}!</div>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+          </div>
         </div>
       </header>
 
@@ -663,6 +698,37 @@
     <script>
       // Base URL for API (same origin when opened via FastAPI)
       const API_BASE = "";
+
+      // Logout function
+      async function logout() {
+        try {
+          const token = localStorage.getItem("token");
+          if (token) {
+            // Call logout endpoint to blacklist token
+            await fetch("/auth/logout", {
+              method: "POST",
+              headers: getAuthHeaders(),
+            });
+          }
+        } catch (error) {
+          console.error("Logout error:", error);
+        } finally {
+          // Clear local storage
+          localStorage.removeItem("token");
+          localStorage.removeItem("tokenExpiry");
+          // Redirect to login
+          window.location.href = "/auth/";
+        }
+      }
+
+      // Helper function to get auth headers
+      function getAuthHeaders() {
+        const token = localStorage.getItem("token");
+        return {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        };
+      }
 
       // Tab switching
       const tabs = document.querySelectorAll(".tab-btn");

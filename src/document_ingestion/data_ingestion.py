@@ -99,8 +99,17 @@ class ChatIngestor:
         faiss_base: str = "faiss_index",
         use_session_dirs: bool = True,
         session_id: Optional[str] = None,
+        is_enriched: bool = False,
     ):
+# class ChatIngestor:
+#     def __init__( self,
+#         temp_base: str = "data",
+#         faiss_base: str = "faiss_index",
+#         use_session_dirs: bool = True,
+#         session_id: Optional[str] = None,
+#     ):
         try:
+            self.is_enriched = is_enriched
             self.model_loader = ModelLoader()
             
             self.use_session = use_session_dirs
@@ -143,7 +152,7 @@ class ChatIngestor:
         k: int = 5,):
         try:
             paths = save_uploaded_files(uploaded_files, self.temp_dir)
-            docs = load_documents(paths)
+            docs = load_documents(paths, self.is_enriched)
             if not docs:
                 raise ValueError("No valid documents loaded")
             
@@ -169,9 +178,7 @@ class ChatIngestor:
             log.error("Failed to build retriever", error=str(e))
             raise DocumentPortalException("Failed to build retriever", e) from e
 
-            
-        
-            
+
 class DocHandler:
     """
     PDF save + read (page-wise) for analysis.
@@ -213,6 +220,8 @@ class DocHandler:
         except Exception as e:
             log.error("Failed to read PDF", error=str(e), pdf_path=pdf_path, session_id=self.session_id)
             raise DocumentPortalException(f"Could not process PDF: {pdf_path}", e) from e
+
+
 class DocumentComparator:
     """
     Save, read & combine PDFs for comparison with session-based versioning.

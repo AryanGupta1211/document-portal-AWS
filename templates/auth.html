@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document Portal - Authentication</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .auth-container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        padding: 40px;
+        width: 100%;
+        max-width: 400px;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .logo {
+        text-align: center;
+        margin-bottom: 30px;
+      }
+
+      .logo h1 {
+        color: #333;
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+
+      .logo p {
+        color: #666;
+        font-size: 14px;
+      }
+
+      .tab-container {
+        display: flex;
+        margin-bottom: 30px;
+        border-radius: 10px;
+        background: #f8f9fa;
+        padding: 5px;
+      }
+
+      .tab {
+        flex: 1;
+        padding: 12px;
+        text-align: center;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: 500;
+        color: #666;
+      }
+
+      .tab.active {
+        background: #667eea;
+        color: white;
+        box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+      }
+
+      .form-container {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .form {
+        transition: all 0.3s ease;
+      }
+
+      .form.hidden {
+        transform: translateX(-100%);
+        opacity: 0;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: #333;
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid #e1e5e9;
+        border-radius: 10px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background: #fff;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+      }
+
+      /* Updated color scheme */
+      :root {
+        --primary: #2563eb;
+        --primary-dark: #1d4ed8;
+        --primary-light: #93c5fd;
+        --secondary: #64748b;
+        --secondary-light: #94a3b8;
+        --accent: #f59e0b;
+        --background: #f8fafc;
+        --card-bg: #ffffff;
+        --text: #1e293b;
+        --text-light: #64748b;
+        --text-lighter: #94a3b8;
+        --border: #e2e8f0;
+        --success: #10b981;
+        --error: #ef4444;
+        --warning: #f59e0b;
+        --info: #3b82f6;
+        --radius: 8px;
+        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+          0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        --transition: all 0.3s ease;
+      }
+
+      body {
+        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        background: var(--background);
+        background-image: linear-gradient(
+          135deg,
+          var(--primary-light) 0%,
+          var(--primary) 100%
+        );
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+      }
+
+      .auth-container {
+        background: var(--card-bg);
+        border-radius: 16px;
+        box-shadow: var(--shadow);
+        padding: 40px;
+        width: 100%;
+        max-width: 400px;
+        border: 1px solid var(--border);
+      }
+
+      .logo h1 {
+        color: var(--text);
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+
+      .logo p {
+        color: var(--text-light);
+        font-size: 14px;
+      }
+
+      .tab-container {
+        display: flex;
+        margin-bottom: 30px;
+        border-radius: var(--radius);
+        background: var(--background);
+        padding: 4px;
+      }
+
+      .tab {
+        flex: 1;
+        padding: 12px;
+        text-align: center;
+        border-radius: calc(var(--radius) - 4px);
+        cursor: pointer;
+        transition: var(--transition);
+        font-weight: 500;
+        color: var(--text-light);
+      }
+
+      .tab.active {
+        background: var(--primary);
+        color: white;
+        box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 12px 16px;
+        border: 2px solid var(--border);
+        border-radius: var(--radius);
+        font-size: 16px;
+        transition: var(--transition);
+        background: var(--card-bg);
+        color: var(--text);
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+      }
+
+      .form-group label {
+        display: block;
+        margin-bottom: 8px;
+        color: var(--text);
+        font-weight: 500;
+        font-size: 14px;
+      }
+
+      .btn {
+        width: 100%;
+        padding: 14px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: var(--radius);
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        margin-top: 10px;
+      }
+
+      .btn:hover {
+        background: var(--primary-dark);
+        transform: translateY(-2px);
+        box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+      }
+
+      .btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      .alert {
+        padding: 12px 16px;
+        border-radius: var(--radius);
+        margin-bottom: 20px;
+        font-size: 14px;
+        font-weight: 500;
+      }
+
+      .alert-success {
+        background: rgba(16, 185, 129, 0.1);
+        color: var(--success);
+        border: 1px solid rgba(16, 185, 129, 0.2);
+      }
+
+      .alert-error {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--error);
+        border: 1px solid rgba(239, 68, 68, 0.2);
+      }
+
+      .loading {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        border-top-color: white;
+        animation: spin 0.8s ease-in-out infinite;
+      }
+
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .password-toggle {
+        position: relative;
+      }
+
+      .password-toggle-btn {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--text-light);
+        cursor: pointer;
+        font-size: 14px;
+        padding: 4px;
+      }
+
+      .password-toggle-btn:hover {
+        color: var(--primary);
+      }
+
+      @media (max-width: 480px) {
+        .auth-container {
+          padding: 30px 20px;
+        }
+
+        .logo h1 {
+          font-size: 24px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="auth-container">
+      <div class="logo">
+        <h1>Document Portal</h1>
+        <p>Secure document analysis & processing</p>
+      </div>
+
+      <div class="tab-container">
+        <div class="tab active" id="loginTab">Login</div>
+        <div class="tab" id="registerTab">Register</div>
+      </div>
+
+      <div class="form-container">
+        <!-- Login Form -->
+        <form id="loginForm" class="form">
+          <div id="loginAlert"></div>
+
+          <div class="form-group">
+            <label for="loginUsername">Username</label>
+            <input
+              type="text"
+              id="loginUsername"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <div class="password-toggle">
+              <input
+                type="password"
+                id="loginPassword"
+                class="form-control"
+                required
+              />
+              <button
+                type="button"
+                class="password-toggle-btn"
+                onclick="togglePassword('loginPassword')"
+              >
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn" id="loginBtn">
+            <span class="btn-text">Login</span>
+            <span class="loading hidden"></span>
+          </button>
+        </form>
+
+        <!-- Register Form -->
+        <form id="registerForm" class="form hidden">
+          <div id="registerAlert"></div>
+
+          <div class="form-group">
+            <label for="registerEmail">Email</label>
+            <input
+              type="email"
+              id="registerEmail"
+              class="form-control"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="registerUsername">Username</label>
+            <input
+              type="text"
+              id="registerUsername"
+              class="form-control"
+              minlength="3"
+              required
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="registerPassword">Password</label>
+            <div class="password-toggle">
+              <input
+                type="password"
+                id="registerPassword"
+                class="form-control"
+                minlength="6"
+                required
+              />
+              <button
+                type="button"
+                class="password-toggle-btn"
+                onclick="togglePassword('registerPassword')"
+              >
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="confirmPassword">Confirm Password</label>
+            <div class="password-toggle">
+              <input
+                type="password"
+                id="confirmPassword"
+                class="form-control"
+                minlength="6"
+                required
+              />
+              <button
+                type="button"
+                class="password-toggle-btn"
+                onclick="togglePassword('confirmPassword')"
+              >
+                👁️
+              </button>
+            </div>
+          </div>
+
+          <button type="submit" class="btn" id="registerBtn">
+            <span class="btn-text">Register</span>
+            <span class="loading hidden"></span>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Tab switching
+      const loginTab = document.getElementById("loginTab");
+      const registerTab = document.getElementById("registerTab");
+      const loginForm = document.getElementById("loginForm");
+      const registerForm = document.getElementById("registerForm");
+
+      loginTab.addEventListener("click", () => {
+        loginTab.classList.add("active");
+        registerTab.classList.remove("active");
+        loginForm.classList.remove("hidden");
+        registerForm.classList.add("hidden");
+        clearAlerts();
+      });
+
+      registerTab.addEventListener("click", () => {
+        registerTab.classList.add("active");
+        loginTab.classList.remove("active");
+        registerForm.classList.remove("hidden");
+        loginForm.classList.add("hidden");
+        clearAlerts();
+      });
+
+      // Password toggle
+      function togglePassword(inputId) {
+        const input = document.getElementById(inputId);
+        const btn = input.nextElementSibling;
+
+        if (input.type === "password") {
+          input.type = "text";
+          btn.textContent = "🙈";
+        } else {
+          input.type = "password";
+          btn.textContent = "👁️";
+        }
+      }
+
+      // Clear alerts
+      function clearAlerts() {
+        document.getElementById("loginAlert").innerHTML = "";
+        document.getElementById("registerAlert").innerHTML = "";
+      }
+
+      // Show alert
+      function showAlert(elementId, message, type) {
+        const alertDiv = document.getElementById(elementId);
+        alertDiv.innerHTML = `<div class="alert alert-${type}">${message}</div>`;
+      }
+
+      // Show loading
+      function showLoading(btnId, show) {
+        const btn = document.getElementById(btnId);
+        const text = btn.querySelector(".btn-text");
+        const loading = btn.querySelector(".loading");
+
+        if (show) {
+          text.classList.add("hidden");
+          loading.classList.remove("hidden");
+          btn.disabled = true;
+        } else {
+          text.classList.remove("hidden");
+          loading.classList.add("hidden");
+          btn.disabled = false;
+        }
+      }
+
+      // Login form handler
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const username = document.getElementById("loginUsername").value;
+          const password = document.getElementById("loginPassword").value;
+
+          clearAlerts();
+          showLoading("loginBtn", true);
+
+          try {
+            const response = await fetch("/auth/login", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                username: username,
+                password: password,
+              }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              // Store token
+              localStorage.setItem("token", data.access_token);
+              localStorage.setItem(
+                "tokenExpiry",
+                Date.now() + data.expires_in * 1000
+              );
+
+              showAlert(
+                "loginAlert",
+                "Login successful! Redirecting...",
+                "success"
+              );
+
+              // Redirect to dashboard
+              setTimeout(() => {
+                window.location.href = "/dashboard";
+              }, 1000);
+            } else {
+              showAlert("loginAlert", data.detail || "Login failed", "error");
+            }
+          } catch (error) {
+            showAlert(
+              "loginAlert",
+              "Network error. Please try again.",
+              "error"
+            );
+          } finally {
+            showLoading("loginBtn", false);
+          }
+        });
+
+      // Register form handler
+      document
+        .getElementById("registerForm")
+        .addEventListener("submit", async (e) => {
+          e.preventDefault();
+
+          const email = document.getElementById("registerEmail").value;
+          const username = document.getElementById("registerUsername").value;
+          const password = document.getElementById("registerPassword").value;
+          const confirmPassword =
+            document.getElementById("confirmPassword").value;
+
+          clearAlerts();
+
+          // Client-side validation
+          if (password !== confirmPassword) {
+            showAlert("registerAlert", "Passwords do not match", "error");
+            return;
+          }
+
+          if (password.length < 6) {
+            showAlert(
+              "registerAlert",
+              "Password must be at least 6 characters",
+              "error"
+            );
+            return;
+          }
+
+          if (username.length < 3) {
+            showAlert(
+              "registerAlert",
+              "Username must be at least 3 characters",
+              "error"
+            );
+            return;
+          }
+
+          showLoading("registerBtn", true);
+
+          try {
+            const response = await fetch("/auth/register", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                email: email,
+                username: username,
+                password: password,
+                confirm_password: confirmPassword,
+              }),
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+              showAlert(
+                "registerAlert",
+                "Registration successful! Please login.",
+                "success"
+              );
+
+              // Switch to login tab after successful registration
+              setTimeout(() => {
+                loginTab.click();
+                document.getElementById("loginUsername").value = username;
+              }, 1500);
+            } else {
+              showAlert(
+                "registerAlert",
+                data.detail || "Registration failed",
+                "error"
+              );
+            }
+          } catch (error) {
+            showAlert(
+              "registerAlert",
+              "Network error. Please try again.",
+              "error"
+            );
+          } finally {
+            showLoading("registerBtn", false);
+          }
+        });
+
+      // Check if user is already logged in
+      function checkAuth() {
+        const token = localStorage.getItem("token");
+        const expiry = localStorage.getItem("tokenExpiry");
+
+        if (token && expiry && Date.now() < parseInt(expiry)) {
+          // User is logged in and token is not expired
+          window.location.href = "/dashboard";
+        }
+      }
+
+      // Check auth on page load
+      checkAuth();
+
+      // Auto-clear expired tokens
+      setInterval(() => {
+        const expiry = localStorage.getItem("tokenExpiry");
+        if (expiry && Date.now() >= parseInt(expiry)) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("tokenExpiry");
+        }
+      }, 60000); // Check every minute
+    </script>
+  </body>
+</html>

@@ -10,3 +10,13 @@ env/
 .github/
 *.log
 logs/
+.deepeval/
+.pytest_cache/
+document_portal.egg-info
+archive
+archieve_requirements.txt
+archive_template.yml
+archive_aws.yml
+data/
+incline_policy.json
+faiss_index/
