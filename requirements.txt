@@ -24,5 +24,6 @@ alembic==1.16.5
 email-validator==2.3.0
 deepeval==3.5.2
 passlib[bcrypt]
+pytest-cov
 
 -e .
