@@ -200,11 +200,11 @@ jobs:
           path: coverage.xml
           retention-days: 7
 
-  # Docker build (only for main/develop pushes, runs in parallel with tests after setup)
+  # Docker build (only after ALL tests pass)
   docker-build:
     runs-on: ubuntu-latest
     name: Build Docker Image
-    needs: setup
+    needs: [unit-tests, integration-tests, security-scan]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
     
     steps:
@@ -243,11 +243,11 @@ jobs:
           path: /tmp/docker-image.tar
           retention-days: 1
 
-  # Deploy only after all tests pass
+  # Deploy only after docker build succeeds
   deploy:
     runs-on: ubuntu-latest
     name: Deploy
-    needs: [unit-tests, integration-tests, security-scan, docker-build]
+    needs: [docker-build]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || github.ref == 'refs/heads/develop')
     
     steps:
