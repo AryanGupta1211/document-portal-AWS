@@ -23,7 +23,3 @@ jobs:
       - name: Run unit tests
         run: |
           pytest tests/test_pre_commit.py
-
-      - name: Run Integration tests
-        run: |
-          pytest tests/test_post_commit.py

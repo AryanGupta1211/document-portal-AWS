@@ -36,45 +36,45 @@ class TestPostCommitSuite:
         logout_response = client.post("/auth/logout", cookies=cookies)
         assert logout_response.status_code == 200
 
-    # @patch('api.main.DocHandler')
-    # @patch('api.main.DocumentAnalyzer')  
-    # @patch('api.main.read_pdf_via_handler')
-    # def test_document_analysis_with_auth(self, mock_read_pdf, mock_analyzer, mock_handler, 
-    #                                    client, auth_cookies, sample_pdf_file, temp_dirs):
-    #     """Test 12: Document analysis with proper authentication and mocked dependencies"""
-    #     # Setup mocks
-    #     mock_read_pdf.return_value = "Sample PDF content for analysis."
-    #     mock_handler_instance = MagicMock()
-    #     mock_handler_instance.save_pdf.return_value = "/tmp/test.pdf"
-    #     mock_handler.return_value = mock_handler_instance
+    @patch('api.main.DocHandler')
+    @patch('api.main.DocumentAnalyzer')  
+    @patch('api.main.read_pdf_via_handler')
+    def test_document_analysis_with_auth(self, mock_read_pdf, mock_analyzer, mock_handler, 
+                                       client, auth_cookies, sample_pdf_file, temp_dirs):
+        """Test 12: Document analysis with proper authentication and mocked dependencies"""
+        # Setup mocks
+        mock_read_pdf.return_value = "Sample PDF content for analysis."
+        mock_handler_instance = MagicMock()
+        mock_handler_instance.save_pdf.return_value = "/tmp/test.pdf"
+        mock_handler.return_value = mock_handler_instance
         
-    #     mock_analyzer_instance = MagicMock()
-    #     mock_analyzer_instance.analyze_document.return_value = {
-    #         "summary": "Test document analysis results",
-    #         "key_points": ["Important point 1", "Important point 2"],
-    #         "word_count": 150,
-    #         "readability_score": 8.5
-    #     }
-    #     mock_analyzer.return_value = mock_analyzer_instance
+        mock_analyzer_instance = MagicMock()
+        mock_analyzer_instance.analyze_document.return_value = {
+            "summary": "Test document analysis results",
+            "key_points": ["Important point 1", "Important point 2"],
+            "word_count": 150,
+            "readability_score": 8.5
+        }
+        mock_analyzer.return_value = mock_analyzer_instance
         
-    #     filename, content, content_type = sample_pdf_file
+        filename, content, content_type = sample_pdf_file
         
-    #     # Use client with authentication cookies
-    #     response = client.post(
-    #         "/analyze",
-    #         files={"file": (filename, content, content_type)},
-    #         cookies=auth_cookies
-    #     )
+        # Use client with authentication cookies
+        response = client.post(
+            "/analyze",
+            files={"file": (filename, content, content_type)},
+            cookies=auth_cookies
+        )
         
-    #     assert response.status_code == 200
-    #     data = response.json()
-    #     assert "summary" in data
-    #     assert data["word_count"] == 150
+        assert response.status_code == 200
+        data = response.json()
+        assert "summary" in data
+        assert data["word_count"] == 150
         
-    #     # Verify mocks were called
-    #     mock_handler.assert_called_once()
-    #     mock_analyzer.assert_called_once()
-    #     mock_read_pdf.assert_called_once()
+        # Verify mocks were called
+        mock_handler.assert_called_once()
+        mock_analyzer.assert_called_once()
+        mock_read_pdf.assert_called_once()
 
     @patch('api.main.DocumentComparator')
     @patch('api.main.DocumentComparatorLLM')
@@ -151,48 +151,48 @@ class TestPostCommitSuite:
         mock_chat_ingestor.assert_called_once()
         mock_ingestor_instance.built_retriver.assert_called_once()
 
-    # @patch('api.main.ConversationalRAG')
-    # @patch.dict(os.environ, {'FAISS_BASE': ''})  # Use empty FAISS_BASE for test control
-    # def test_chat_query_with_auth(self, mock_rag, client, auth_cookies, temp_dirs):
-    #     """Test 15: Chat query with authentication and mocked FAISS index"""
-    #     # Create fake FAISS directory structure in the test temp directory
-    #     session_dir = os.path.join(temp_dirs["faiss"], "test_session")
-    #     os.makedirs(session_dir, exist_ok=True)
+    @patch('api.main.ConversationalRAG')
+    @patch.dict(os.environ, {'FAISS_BASE': ''})  # Use empty FAISS_BASE for test control
+    def test_chat_query_with_auth(self, mock_rag, client, auth_cookies, temp_dirs):
+        """Test 15: Chat query with authentication and mocked FAISS index"""
+        # Create fake FAISS directory structure in the test temp directory
+        session_dir = os.path.join(temp_dirs["faiss"], "test_session")
+        os.makedirs(session_dir, exist_ok=True)
         
-    #     # Create dummy index files
-    #     with open(os.path.join(session_dir, "index.faiss"), "w") as f:
-    #         f.write("dummy")
-    #     with open(os.path.join(session_dir, "index.pkl"), "w") as f:
-    #         f.write("dummy")
+        # Create dummy index files
+        with open(os.path.join(session_dir, "index.faiss"), "w") as f:
+            f.write("dummy")
+        with open(os.path.join(session_dir, "index.pkl"), "w") as f:
+            f.write("dummy")
         
-    #     # Setup mock
-    #     mock_rag_instance = MagicMock()
-    #     mock_rag_instance.load_retriever_from_faiss.return_value = None
-    #     mock_rag_instance.invoke.return_value = "This is a response to your question about the documents."
-    #     mock_rag.return_value = mock_rag_instance
+        # Setup mock
+        mock_rag_instance = MagicMock()
+        mock_rag_instance.load_retriever_from_faiss.return_value = None
+        mock_rag_instance.invoke.return_value = "This is a response to your question about the documents."
+        mock_rag.return_value = mock_rag_instance
         
-    #     # Patch the FAISS_BASE to point to our temp directory
-    #     with patch('api.main.FAISS_BASE', temp_dirs["faiss"]):
-    #         response = client.post(
-    #             "/chat/query",
-    #             data={
-    #                 "question": "What is the main topic of the documents?",
-    #                 "session_id": "test_session",
-    #                 "use_session_dirs": "true",
-    #                 "k": "5"
-    #             },
-    #             cookies=auth_cookies
-    #         )
+        # Patch the FAISS_BASE to point to our temp directory
+        with patch('api.main.FAISS_BASE', temp_dirs["faiss"]):
+            response = client.post(
+                "/chat/query",
+                data={
+                    "question": "What is the main topic of the documents?",
+                    "session_id": "test_session",
+                    "use_session_dirs": "true",
+                    "k": "5"
+                },
+                cookies=auth_cookies
+            )
         
-    #     assert response.status_code == 200
-    #     data = response.json()
-    #     assert data["answer"] == "This is a response to your question about the documents."
-    #     assert data["session_id"] == "test_session"
-    #     assert data["k"] == 5
-    #     assert data["engine"] == "LCEL-RAG"
+        assert response.status_code == 200
+        data = response.json()
+        assert data["answer"] == "This is a response to your question about the documents."
+        assert data["session_id"] == "test_session"
+        assert data["k"] == 5
+        assert data["engine"] == "LCEL-RAG"
         
-    #     # Verify mock interactions
-    #     mock_rag.assert_called_once_with(session_id="test_session")
-    #     mock_rag_instance.load_retriever_from_faiss.assert_called_once()
-    #     mock_rag_instance.invoke.assert_called_once()
+        # Verify mock interactions
+        mock_rag.assert_called_once_with(session_id="test_session")
+        mock_rag_instance.load_retriever_from_faiss.assert_called_once()
+        mock_rag_instance.invoke.assert_called_once()
 
