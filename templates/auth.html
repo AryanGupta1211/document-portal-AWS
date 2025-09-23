@@ -13,48 +13,189 @@
 
       body {
         font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        background-color: #f8fafc;
         min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding: 0;
+      }
+
+      /* Navbar Styles */
+      .navbar {
+        background-color: #2563eb;
+        padding: 15px 0;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        width: 100%;
+      }
+
+      .navbar-content {
         display: flex;
         align-items: center;
         justify-content: center;
-        padding: 20px;
-      }
-
-      .auth-container {
-        background: rgba(255, 255, 255, 0.95);
-        border-radius: 20px;
-        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
-        padding: 40px;
-        width: 100%;
-        max-width: 400px;
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 20px;
       }
 
       .logo {
-        text-align: center;
-        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        color: white;
+        text-decoration: none;
+      }
+
+      .logo span {
+        font-size: 32px;
+        margin-right: 10px;
       }
 
       .logo h1 {
-        color: #333;
         font-size: 28px;
+        font-weight: 700;
+        margin: 0;
+      }
+
+      /* Main Content */
+      .main-content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-grow: 1;
+        padding: 40px 20px;
+      }
+
+      .content-wrapper {
+        display: flex;
+        flex-direction: column;
+        max-width: 900px;
+        width: 100%;
+        gap: 40px;
+        align-items: center;
+      }
+
+      /* Welcome Section */
+      .welcome-section {
+        text-align: center;
+        max-width: 700px;
+        margin-bottom: 20px;
+      }
+
+      .welcome-section h2 {
+        color: #1e293b;
+        font-size: 32px;
+        margin-bottom: 15px;
+        font-weight: 700;
+      }
+
+      .welcome-section p {
+        color: #64748b;
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      /* Cards Container */
+      .cards-container {
+        display: flex;
+        gap: 30px;
+        width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+
+      /* Features Card */
+      .features-card {
+        flex: 1;
+        min-width: 300px;
+        max-width: 400px;
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+      }
+
+      .features-card h3 {
+        color: #1e293b;
+        font-size: 22px;
+        margin-bottom: 20px;
+        text-align: center;
+        font-weight: 600;
+      }
+
+      .features-list {
+        list-style: none;
+      }
+
+      .feature-item {
+        display: flex;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        padding: 15px;
+        border-radius: 10px;
+        background: #f8fafc;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .feature-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .feature-icon {
+        font-size: 24px;
+        margin-right: 15px;
+        margin-top: 5px;
+        flex-shrink: 0;
+      }
+
+      .feature-content h4 {
+        color: #1e293b;
+        font-size: 16px;
+        margin-bottom: 5px;
+        font-weight: 600;
+      }
+
+      .feature-content p {
+        color: #64748b;
+        font-size: 14px;
+        line-height: 1.5;
+      }
+
+      /* Auth Card */
+      .auth-card {
+        flex: 1;
+        min-width: 300px;
+        max-width: 400px;
+        background: white;
+        border-radius: 16px;
+        padding: 30px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        border: 1px solid #e2e8f0;
+      }
+
+      .logo-small {
+        text-align: center;
+        margin-bottom: 25px;
+      }
+
+      .logo-small h2 {
+        color: #1e293b;
+        font-size: 24px;
         font-weight: 700;
         margin-bottom: 5px;
       }
 
-      .logo p {
-        color: #666;
+      .logo-small p {
+        color: #64748b;
         font-size: 14px;
       }
 
       .tab-container {
         display: flex;
-        margin-bottom: 30px;
+        margin-bottom: 25px;
         border-radius: 10px;
-        background: #f8f9fa;
-        padding: 5px;
+        background: #f1f5f9;
+        padding: 4px;
       }
 
       .tab {
@@ -65,13 +206,13 @@
         cursor: pointer;
         transition: all 0.3s ease;
         font-weight: 500;
-        color: #666;
+        color: #64748b;
       }
 
       .tab.active {
-        background: #667eea;
+        background: #2563eb;
         color: white;
-        box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+        box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
       }
 
       .form-container {
@@ -99,7 +240,7 @@
       .form-group label {
         display: block;
         margin-bottom: 8px;
-        color: #333;
+        color: #374151;
         font-weight: 500;
         font-size: 14px;
       }
@@ -107,8 +248,8 @@
       .form-control {
         width: 100%;
         padding: 12px 16px;
-        border: 2px solid #e1e5e9;
-        border-radius: 10px;
+        border: 2px solid #e5e7eb;
+        border-radius: 8px;
         font-size: 16px;
         transition: all 0.3s ease;
         background: #fff;
@@ -116,138 +257,26 @@
 
       .form-control:focus {
         outline: none;
-        border-color: #667eea;
-        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
-      }
-
-      /* Updated color scheme */
-      :root {
-        --primary: #2563eb;
-        --primary-dark: #1d4ed8;
-        --primary-light: #93c5fd;
-        --secondary: #64748b;
-        --secondary-light: #94a3b8;
-        --accent: #f59e0b;
-        --background: #f8fafc;
-        --card-bg: #ffffff;
-        --text: #1e293b;
-        --text-light: #64748b;
-        --text-lighter: #94a3b8;
-        --border: #e2e8f0;
-        --success: #10b981;
-        --error: #ef4444;
-        --warning: #f59e0b;
-        --info: #3b82f6;
-        --radius: 8px;
-        --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
-          0 2px 4px -1px rgba(0, 0, 0, 0.06);
-        --transition: all 0.3s ease;
-      }
-
-      body {
-        font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI",
-          sans-serif;
-        background: var(--background);
-        background-image: linear-gradient(
-          135deg,
-          var(--primary-light) 0%,
-          var(--primary) 100%
-        );
-        min-height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 20px;
-      }
-
-      .auth-container {
-        background: var(--card-bg);
-        border-radius: 16px;
-        box-shadow: var(--shadow);
-        padding: 40px;
-        width: 100%;
-        max-width: 400px;
-        border: 1px solid var(--border);
-      }
-
-      .logo h1 {
-        color: var(--text);
-        font-size: 28px;
-        font-weight: 700;
-        margin-bottom: 5px;
-      }
-
-      .logo p {
-        color: var(--text-light);
-        font-size: 14px;
-      }
-
-      .tab-container {
-        display: flex;
-        margin-bottom: 30px;
-        border-radius: var(--radius);
-        background: var(--background);
-        padding: 4px;
-      }
-
-      .tab {
-        flex: 1;
-        padding: 12px;
-        text-align: center;
-        border-radius: calc(var(--radius) - 4px);
-        cursor: pointer;
-        transition: var(--transition);
-        font-weight: 500;
-        color: var(--text-light);
-      }
-
-      .tab.active {
-        background: var(--primary);
-        color: white;
-        box-shadow: 0 2px 4px rgba(37, 99, 235, 0.2);
-      }
-
-      .form-control {
-        width: 100%;
-        padding: 12px 16px;
-        border: 2px solid var(--border);
-        border-radius: var(--radius);
-        font-size: 16px;
-        transition: var(--transition);
-        background: var(--card-bg);
-        color: var(--text);
-      }
-
-      .form-control:focus {
-        outline: none;
-        border-color: var(--primary);
+        border-color: #2563eb;
         box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
-      }
-
-      .form-group label {
-        display: block;
-        margin-bottom: 8px;
-        color: var(--text);
-        font-weight: 500;
-        font-size: 14px;
       }
 
       .btn {
         width: 100%;
         padding: 14px;
-        background: var(--primary);
+        background: #2563eb;
         color: white;
         border: none;
-        border-radius: var(--radius);
+        border-radius: 8px;
         font-size: 16px;
         font-weight: 600;
         cursor: pointer;
-        transition: var(--transition);
+        transition: all 0.3s ease;
         margin-top: 10px;
       }
 
       .btn:hover {
-        background: var(--primary-dark);
+        background: #1d4ed8;
         transform: translateY(-2px);
         box-shadow: 0 8px 15px rgba(37, 99, 235, 0.3);
       }
@@ -264,7 +293,7 @@
 
       .alert {
         padding: 12px 16px;
-        border-radius: var(--radius);
+        border-radius: 8px;
         margin-bottom: 20px;
         font-size: 14px;
         font-weight: 500;
@@ -272,13 +301,13 @@
 
       .alert-success {
         background: rgba(16, 185, 129, 0.1);
-        color: var(--success);
+        color: #10b981;
         border: 1px solid rgba(16, 185, 129, 0.2);
       }
 
       .alert-error {
         background: rgba(239, 68, 68, 0.1);
-        color: var(--error);
+        color: #ef4444;
         border: 1px solid rgba(239, 68, 68, 0.2);
       }
 
@@ -313,150 +342,212 @@
         transform: translateY(-50%);
         background: none;
         border: none;
-        color: var(--text-light);
+        color: #6b7280;
         cursor: pointer;
         font-size: 14px;
         padding: 4px;
       }
 
       .password-toggle-btn:hover {
-        color: var(--primary);
+        color: #2563eb;
       }
 
-      @media (max-width: 480px) {
-        .auth-container {
-          padding: 30px 20px;
+      /* Footer */
+      .footer {
+        text-align: center;
+        padding: 20px;
+        color: #64748b;
+        font-size: 14px;
+        margin-top: 20px;
+      }
+
+      @media (max-width: 768px) {
+        .cards-container {
+          flex-direction: column;
+          align-items: center;
         }
 
-        .logo h1 {
-          font-size: 24px;
+        .features-card,
+        .auth-card {
+          width: 100%;
+          max-width: 400px;
+        }
+
+        .welcome-section h2 {
+          font-size: 26px;
+        }
+
+        .welcome-section p {
+          font-size: 16px;
         }
       }
     </style>
   </head>
   <body>
-    <div class="auth-container">
-      <div class="logo">
-        <h1>Document Portal</h1>
-        <p>Secure document analysis & processing</p>
+    <!-- Navbar -->
+    <nav class="navbar">
+      <div class="navbar-content">
+        <a href="#" class="logo">
+          <span class="logo">📚</span>
+          <h1>Document Portal</h1>
+        </a>
       </div>
+    </nav>
 
-      <div class="tab-container">
-        <div class="tab active" id="loginTab">Login</div>
-        <div class="tab" id="registerTab">Register</div>
-      </div>
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="content-wrapper">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+          <h2>Welcome to Document Portal</h2>
+          <p>
+            Your centralized platform for intelligent document management,
+            analysis, and collaboration. Access powerful tools to transform how
+            you work with documents.
+          </p>
+        </div>
 
-      <div class="form-container">
-        <!-- Login Form -->
-        <form id="loginForm" class="form">
-          <div id="loginAlert"></div>
+        <!-- Cards Container -->
+        <div class="cards-container">
+          <!-- Features Card -->
+          <!-- Auth Card -->
+          <div class="auth-card">
+            <div class="logo-small">
+              <h2>Get Started</h2>
+              <p>Sign in or create an account to continue</p>
+            </div>
 
-          <div class="form-group">
-            <label for="loginUsername">Username</label>
-            <input
-              type="text"
-              id="loginUsername"
-              class="form-control"
-              required
-            />
-          </div>
+            <div class="tab-container">
+              <div class="tab active" id="loginTab">Login</div>
+              <div class="tab" id="registerTab">Register</div>
+            </div>
 
-          <div class="form-group">
-            <label for="loginPassword">Password</label>
-            <div class="password-toggle">
-              <input
-                type="password"
-                id="loginPassword"
-                class="form-control"
-                required
-              />
-              <button
-                type="button"
-                class="password-toggle-btn"
-                onclick="togglePassword('loginPassword')"
-              >
-                👁️
-              </button>
+            <div class="form-container">
+              <!-- Login Form -->
+              <form id="loginForm" class="form">
+                <div id="loginAlert"></div>
+
+                <div class="form-group">
+                  <label for="loginUsername">Username</label>
+                  <input
+                    type="text"
+                    id="loginUsername"
+                    class="form-control"
+                    placeholder="Enter your username"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="loginPassword">Password</label>
+                  <div class="password-toggle">
+                    <input
+                      type="password"
+                      id="loginPassword"
+                      class="form-control"
+                      placeholder="Enter your password"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="password-toggle-btn"
+                      onclick="togglePassword('loginPassword')"
+                    >
+                      👁️
+                    </button>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn" id="loginBtn">
+                  <span class="btn-text">Login to Your Account</span>
+                  <span class="loading hidden"></span>
+                </button>
+              </form>
+
+              <!-- Register Form -->
+              <form id="registerForm" class="form hidden">
+                <div id="registerAlert"></div>
+
+                <div class="form-group">
+                  <label for="registerEmail">Email Address</label>
+                  <input
+                    type="email"
+                    id="registerEmail"
+                    class="form-control"
+                    placeholder="Enter your email"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="registerUsername">Username</label>
+                  <input
+                    type="text"
+                    id="registerUsername"
+                    class="form-control"
+                    placeholder="Choose a username"
+                    minlength="3"
+                    required
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label for="registerPassword">Password</label>
+                  <div class="password-toggle">
+                    <input
+                      type="password"
+                      id="registerPassword"
+                      class="form-control"
+                      placeholder="Create a password"
+                      minlength="6"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="password-toggle-btn"
+                      onclick="togglePassword('registerPassword')"
+                    >
+                      👁️
+                    </button>
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label for="confirmPassword">Confirm Password</label>
+                  <div class="password-toggle">
+                    <input
+                      type="password"
+                      id="confirmPassword"
+                      class="form-control"
+                      placeholder="Confirm your password"
+                      minlength="6"
+                      required
+                    />
+                    <button
+                      type="button"
+                      class="password-toggle-btn"
+                      onclick="togglePassword('confirmPassword')"
+                    >
+                      👁️
+                    </button>
+                  </div>
+                </div>
+
+                <button type="submit" class="btn" id="registerBtn">
+                  <span class="btn-text">Create Account</span>
+                  <span class="loading hidden"></span>
+                </button>
+              </form>
             </div>
           </div>
-
-          <button type="submit" class="btn" id="loginBtn">
-            <span class="btn-text">Login</span>
-            <span class="loading hidden"></span>
-          </button>
-        </form>
-
-        <!-- Register Form -->
-        <form id="registerForm" class="form hidden">
-          <div id="registerAlert"></div>
-
-          <div class="form-group">
-            <label for="registerEmail">Email</label>
-            <input
-              type="email"
-              id="registerEmail"
-              class="form-control"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="registerUsername">Username</label>
-            <input
-              type="text"
-              id="registerUsername"
-              class="form-control"
-              minlength="3"
-              required
-            />
-          </div>
-
-          <div class="form-group">
-            <label for="registerPassword">Password</label>
-            <div class="password-toggle">
-              <input
-                type="password"
-                id="registerPassword"
-                class="form-control"
-                minlength="6"
-                required
-              />
-              <button
-                type="button"
-                class="password-toggle-btn"
-                onclick="togglePassword('registerPassword')"
-              >
-                👁️
-              </button>
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="confirmPassword">Confirm Password</label>
-            <div class="password-toggle">
-              <input
-                type="password"
-                id="confirmPassword"
-                class="form-control"
-                minlength="6"
-                required
-              />
-              <button
-                type="button"
-                class="password-toggle-btn"
-                onclick="togglePassword('confirmPassword')"
-              >
-                👁️
-              </button>
-            </div>
-          </div>
-
-          <button type="submit" class="btn" id="registerBtn">
-            <span class="btn-text">Register</span>
-            <span class="loading hidden"></span>
-          </button>
-        </form>
+        </div>
       </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <div>© Document Portal • Professional Document Analysis</div>
+      <div class="tiny">Made By:- Aryan Gupta with ❤️</div>
     </div>
 
     <script>

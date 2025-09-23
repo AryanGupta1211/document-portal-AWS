@@ -16,8 +16,10 @@ from src.document_ingestion.data_ingestion import (
 from auth.utils import AuthUtils
 from src.document_analyzer.data_analysis import DocumentAnalyzer
 from src.document_compare.document_comparator import DocumentComparatorLLM
-from src.document_chat.retrieval import ConversationalRAG
+from src.document_chat.advance_retrieval_with_evaluation import ConversationalRAG
+# from src.document_chat.retrieval import ConversationalRAG
 from utils.document_ops import FastAPIFileAdapter, read_pdf_via_handler
+from utils.deepeval_evaluation.evaluation import RealtimeRAGEvaluator
 from logger import GLOBAL_LOGGER as log
 
 # Import authentication modules
@@ -186,7 +188,14 @@ async def chat_query(
         rag = ConversationalRAG(session_id=session_id)
         rag.load_retriever_from_faiss(index_dir, k=k, index_name=FAISS_INDEX_NAME)
         response = rag.invoke(question, chat_history=[])
+        contexts = rag.get_last_contexts()
         log.info("Chat query handled successfully.")
+        
+        evaluator = RealtimeRAGEvaluator()
+        
+        eval_report = evaluator.evaluate_pipeline(query=question, contexts=contexts, actual_output=response)
+        
+        print("===========EVAL REPORT:=========== \n", eval_report)
 
         return {
             "answer": response,

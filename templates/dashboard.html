@@ -478,7 +478,7 @@
               Document Analysis
             </button>
             <button class="tab-btn" data-tab="compare">Document Compare</button>
-            <button class="tab-btn" data-tab="chat">Doc Chat</button>
+            <button class="tab-btn" data-tab="chat">Document Chat</button>
           </nav>
           <div class="user-info">
             <div class="welcome-text">Welcome, {{ user.username }}!</div>
@@ -569,9 +569,7 @@
         <section id="tab-chat" class="tab-panel">
           <div class="card">
             <h2>💬 Chat with your Documents</h2>
-            <p class="muted">
-              Upload PDF/DOCX/TXT; we'll index to FAISS and enable RAG chat.
-            </p>
+            <p class="muted">Upload PDF/DOCX/TXT/PPTX/MD/CSV/XLXS.</p>
 
             <form
               id="form-chat-index"
@@ -584,7 +582,7 @@
                   id="chat-files"
                   type="file"
                   multiple
-                  accept=".pdf,.docx,.txt"
+                  accept=".pdf,.docx,.txt,.md,.pptx,.csv,.xlsx"
                 />
                 <small class="help"
                   >You can select multiple files (max 20MB total)</small
